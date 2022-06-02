@@ -1,0 +1,26 @@
+stages: 
+  - plan
+  - apply
+
+image:
+  name: hashicorp/terraform:latest
+  entrypoint:
+    - /usr/bin/env
+    - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+terraform plan: 
+  stage: plan
+  script:
+    - cd ./tf
+    - terraform init
+    - terraform validate
+    - terraform plan
+
+terraform apply: 
+  stage: apply
+  script:
+    - cd ./tf
+    - terraform init
+    - terraform plan
+    - terraform apply --auto-approve
+
